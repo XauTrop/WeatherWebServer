@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Station Data</title>
+    <!-- FONT AWSOME-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- CUSTOM FONTS OSWALD-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400&display=swap" rel="stylesheet">
+    <!-- CUSTOM CSS-->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- CUSTOM CHARJS AND D3-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js" integrity="sha512-NMhzM2RHzbCRO0s5VPaRC+2bW6nmNXimzC9p5sp2x19M+zzuSJ2T50dEQ7hpHkNjnX1mt8nQg1NNthwRZgsoIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
+
+</head>
+<body>
+    <div class="container">
+        <nav class="nav-main">
+            <img src="img/logo_face_white.png" alt="Atelier d'en Xaume" class="nav-brand">
+            <ul class="nav-menu">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li>
+                    <a href="trends.html">Trends</a>
+                </li><li>
+                    <a href="#">Support</a>
+                </li>
+                <li>
+                    <p style="font-size: 14px;">Date/Time: <span id="datetime"></span></p>
+
+                    <script>
+                        var dt = new Date();
+                        document.getElementById("datetime").innerHTML = dt.toLocaleString();
+                    </script>
+                </li>
+            </ul>
+            <ul class="nav-menu-right">
+                <li>
+                    <a href="#">
+                        <i class="fas fa-search"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <hr>
+        <div class="data_tables">
+    <!-- Dades Exteriors -->
+            <div>
+                <!-- <h2 class="exterior"> Exterior </h2> -->
+                <table class="table_ext" cellspacing="1" cellpadding="3">
+                    <h2 class="exterior"> Exterior </h2>
+                    <tbody>
+                        <tr>
+                <!-- ESCRIU TAULA DE DADES DELS SENSORS ACTIUS !-->
+                            <td colspan="3" class="titolet">Temperatura</td>
+                            <td class="separador"></td>
+                            <td colspan="3" class="titolet">Humitat</td>
+                            <td class="separador"></td>
+                            <td colspan="3" class="titolet">Pressió</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="dadesactuals" id="temp_out"></td>
+                            <td class="separador"></td>
+                            <td colspan="3" class="dadesactuals" id="hum_out"></td>
+                            <td class="separador"></td>
+                            <td colspan="3" class="dadesactuals" id="pressure_out"></td>
+                        </tr>
+                        <tr class="separador"></tr>
+                        <tr>
+                            <td class="subtitolet">&nbsp;</td>
+                            <td class="subtitoletmax">Màx.</td>
+                            <td class="subtitoletmin">Mín.</td>
+                            <td class="separador"></td>
+                            <td class="subtitolet">&nbsp;</td>
+                            <td class="subtitoletmax">Màx.</td>
+                            <td class="subtitoletmin">Mín.</td>
+                            <td class="separador"></td>
+                            <td class="subtitolet">&nbsp;</td>
+                            <td class="subtitoletmax">Màx.</td>
+                            <td class="subtitoletmin">Mín.</td>
+                        </tr>
+                        <tr>
+                            <td class="dades"><span class="period">Avui</span></td>
+                            <td class="dades"><span class="vermell">16.0</span></td>
+                            <td class="dades"><span class="blau">10.5</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Avui</span></td>
+                            <td class="dades"><span class="vermell">59</span></td>
+                            <td class="dades"><span class="blau">41</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Avui</span></td>
+                            <td class="dades"><span class="vermell">1023</span></td>
+                            <td class="dades"><span class="blau">1019</span></td>
+                        </tr>
+                        <tr>
+                            <td class="dades"><span class="period">Mes</span></td>
+                            <td class="dades"><span class="vermell">16.0</span></td>
+                            <td class="dades"><span class="blau">7.6</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Mes</span></td>
+                            <td class="dades"><span class="vermell">77</span></td>
+                            <td class="dades"><span class="blau">35</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Mes</span></td>
+                            <td class="dades"><span class="vermell">1023</span></td>
+                            <td class="dades"><span class="blau">1017</span></td>
+                        </tr>
+                        <tr>
+                            <td class="dades"><span class="period">Any</span></td>
+                            <td class="dades"><span class="vermell">20.6</span></td>
+                            <td class="dades"><span class="blau">3.6</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Any</span></td>
+                            <td class="dades"><span class="vermell">88</span></td>
+                            <td class="dades"><span class="blau">20</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Any</span></td>
+                            <td class="dades"><span class="vermell">1032</span></td>
+                            <td class="dades"><span class="blau">1001</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    <!-- Dades interiors !-->
+            <div>
+                <h2 class="interior"> Interior </h2>
+                <table class="table_in" cellspacing="1" cellpadding="3">
+                    <tbody>
+                        <tr>
+                <!-- ESCRIU TAULA DE DADES DELS SENSORS ACTIUS !-->
+                            <td colspan="3" class="titolet">Temperatura</td>
+                            <td class="separador"></td>
+                            <td colspan="3" class="titolet">Humitat</td>
+                            <td class="separador"></td>
+                            <td colspan="3" class="titolet">Pressió</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="dadesactuals" id="temp_in"></td>
+                            <td class="separador"></td>
+                            <td colspan="3" class="dadesactuals" id="hum_in"></td>
+                            <td class="separador"></td>
+                            <td colspan="3" class="dadesactuals" id="pressure_in"></td>
+                        </tr>
+                        <tr class="separador"></tr>
+                        <tr>
+                            <td class="subtitolet">&nbsp;</td>
+                            <td class="subtitoletmax">Màx.</td>
+                            <td class="subtitoletmin">Mín.</td>
+                            <td class="separador"></td>
+                            <td class="subtitolet">&nbsp;</td>
+                            <td class="subtitoletmax">Màx.</td>
+                            <td class="subtitoletmin">Mín.</td>
+                            <td class="separador"></td>
+                            <td class="subtitolet">&nbsp;</td>
+                            <td class="subtitoletmax">Màx.</td>
+                            <td class="subtitoletmin">Mín.</td>
+                        </tr>
+                        <tr>
+                            <td class="dades"><span class="period">Avui</span></td>
+                            <td class="dades"><span class="vermell">16.0</span></td>
+                            <td class="dades"><span class="blau">10.5</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Avui</span></td>
+                            <td class="dades"><span class="vermell">59</span></td>
+                            <td class="dades"><span class="blau">41</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Avui</span></td>
+                            <td class="dades"><span class="vermell">1023</span></td>
+                            <td class="dades"><span class="blau">1019</span></td>
+                        </tr>
+                        <tr>
+                            <td class="dades"><span class="period">Mes</span></td>
+                            <td class="dades"><span class="vermell">16.0</span></td>
+                            <td class="dades"><span class="blau">7.6</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Mes</span></td>
+                            <td class="dades"><span class="vermell">77</span></td>
+                            <td class="dades"><span class="blau">35</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Mes</span></td>
+                            <td class="dades"><span class="vermell">1023</span></td>
+                            <td class="dades"><span class="blau">1017</span></td>
+                        </tr>
+                        <tr>
+                            <td class="dades"><span class="period">Any</span></td>
+                            <td class="dades"><span class="vermell">20.6</span></td>
+                            <td class="dades"><span class="blau">3.6</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Any</span></td>
+                            <td class="dades"><span class="vermell">88</span></td>
+                            <td class="dades"><span class="blau">20</span></td>
+                            <td class="separador"></td>
+                            <td class="dades"><span class="period">Any</span></td>
+                            <td class="dades"><span class="vermell">1032</span></td>
+                            <td class="dades"><span class="blau">1001</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- <script>
+                var data = [25, 75, 1023, 10, 68];
+                document.getElementById("temp_in").innerHTML = data[0];
+              </script> -->
+            <div class="daily_plot">
+                <hr>
+                <h3 class="daily_plots_title">Daily Evolution</h3>
+                <canvas class="daily_plot" id="plots_daily"></canvas>
+            <!-- </div>
+            <div class="daily_plot"> -->
+                <canvas id="plots_daily2"></canvas>
+
+            <!-- <div class="daily_plot"> -->
+                <canvas id="plots_daily3"></canvas>
+            <!-- </div> -->
+            </div>
+            <div class="column3">
+                <h3 class="daily_plots_title" style="padding: 20px 20px; text-align: center">Daily Energy Price</h3>
+                    <div id="hour_prices" class="col-display-4" style="padding:10px 10px">
+                        <!-- <div id="price1" style="text-align: center"></div>
+                        <div id="price2" style="text-align: center"></div>
+                        <div id="price3" style="text-align: center"></div>
+                        <div id="price4" style="text-align: center"></div>
+                        <div id="price5" style="text-align: center"></div>
+                        <div id="price6" style="text-align: center"></div>
+                        <div id="price7" style="text-align: center"></div>
+                        <div id="price8" style="text-align: center"></div>
+                        <div id="price9" style="text-align: center"></div>
+                        <div id="price10" style="text-align: center"></div>
+                        <div id="price11" style="text-align: center"></div>
+                        <div id="price12" style="text-align: center"></div>
+                        <div id="price13" style="text-align: center"></div>
+                        <div id="price14" style="text-align: center"></div>
+                        <div id="price15" style="text-align: center"></div>
+                        <div id="price16" style="text-align: center"></div>
+                        <div id="price17" style="text-align: center"></div>
+                        <div id="price18" style="text-align: center"></div>
+                        <div id="price19" style="text-align: center"></div>
+                        <div id="price20" style="text-align: center"></div>
+                        <div id="price21" style="text-align: center"></div>
+                        <div id="price22" style="text-align: center"></div>
+                        <div id="price23" style="text-align: center"></div>
+                        <div id="price24" style="text-align: center"></div> -->
+                        <div>
+                            <canvas class="daily_plot" id="plot_price" style="padding-top: 10px"></canvas>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="js/plots_daily.js"></script>
+<script src="js/read_energy_price.js"></script>
+</html>
